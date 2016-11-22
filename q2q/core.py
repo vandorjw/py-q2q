@@ -21,8 +21,7 @@ def get_db_connection():
                                 port=project_settings.POSTGRESQL_PORT,
                                 host=project_settings.POSTGRESQL_HOST)
     except Exception as error:
-        logger.debug(error)
-        logging.error(error)
+        logger.error(error)
         raise Exception(error)
     else:
         logger.debug("Connection successful")
@@ -96,9 +95,9 @@ if __name__ == '__main__':
     try:
         run()
     except KeyboardInterrupt:
-        logging.info("KeyboadInterrupt. Good Bye!")
+        logger.info("KeyboadInterrupt. Good Bye!")
         sys.exit()
     except Exception as error:
-        logging.error(error)
-        logging.error("Unknown Exception. Good Bye!")
+        logger.error(error)
+        logger.error("Unknown Exception. Good Bye!")
         sys.exit()
