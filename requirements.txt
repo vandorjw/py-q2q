@@ -1,0 +1,4 @@
+amqp==2.1.1
+kombu==4.0.0
+psycopg2==2.6.2
+vine==1.1.3
