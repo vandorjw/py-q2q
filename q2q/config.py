@@ -9,9 +9,9 @@ POSTGRESQL_DATABASE = os.environ.get('POSTGRESQL_DATABASE', 'dev')
 POSTGRESQL_PORT = os.environ.get('POSTGRESQL_DATABASE', '5432')
 POSTGRESQL_CHANNELS = os.environ.get('POSTGRESQL_CHANNELS', 'channel1,channel2').split(',')
 
-RABBITMQ_USER = os.environ.get('RABBITMQ_USER', 'dev')
-RABBITMQ_PASSWD = os.environ.get('RABBITMQ_PASSWD', 'dev')
 RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST', 'localhost')
+RABBITMQ_USER = os.environ.get('RABBITMQ_USER', 'dev')
+RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_PASSWORD', 'dev')
 RABBITMQ_PORT = os.environ.get('RABBITMQ_PORT', '5672')
 RABBITMQ_VHOST = os.environ.get('RABBITMQ_VHOST', 'dev')
 
@@ -35,7 +35,7 @@ LOGGING = {
             'formatter': 'verbose'
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
