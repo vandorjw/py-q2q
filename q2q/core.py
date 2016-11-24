@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import socket
+import datetime
+from time import time
 import asyncio
 import logging
 from logging.config import dictConfig
 import select
 import sys
+import uuid
 from kombu import Connection
 import psycopg2
 import psycopg2.extensions
@@ -57,6 +61,10 @@ def listen(conn, *, channel_name):
             yield from asyncio.sleep(0)
 
 
+def construct_message(*, channel_name, message):
+    pass
+
+
 def place_message(*, channel_name, message):
 
     amqp_dsn = 'amqp://{user}:{passwd}@{host}:{port}/{vhost}'.format(
@@ -68,10 +76,17 @@ def place_message(*, channel_name, message):
     )
 
     with Connection(amqp_dsn) as conn:
-        simple_queue = conn.SimpleQueue(channel_name)
-        simple_queue.put(message)
-        logger.info('Sent: %s' % message)
-        simple_queue.close()
+        try:
+            simple_queue = conn.SimpleQueue(channel_name)
+            celery_headers = {'task': 'transaction', 'id': str(uuid.uuid1()),}
+
+            test_message=message, {}, {"chain": None, "errbacks": None, "chord": None, "callbacks": None}
+
+            simple_queue.put(test_message, serializer='json', headers=celery_headers)
+            logger.info('Sent: %s' % message)
+            simple_queue.close()
+        except Exception as error:
+            logger.error(error)
 
 
 def run():
